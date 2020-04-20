@@ -27,3 +27,13 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+// This block encapsulates custom properties and makes them available to all
+// modules in the project.
+ext {
+    compileSdkVersion = 29
+    supportLibVersion = "29.0.3"
+    roomVersion = "2.2.5"
+    lifecycleVersion = "2.2.0"
+    retroFitVersion = "2.8.1"
+}

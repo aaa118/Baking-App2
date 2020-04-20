@@ -3,7 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
     defaultConfig {
         applicationId "com.adi.baking.app2"
         minSdkVersion 21
@@ -20,7 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
+    viewBinding.enabled = true
 }
 
 dependencies {
@@ -29,8 +32,32 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.google.android.material:material:1.1.0'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    // Recyclerview
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    // JSON Parsing
+    implementation 'com.google.code.gson:gson:2.8.6'
+    //RetroFit
+    implementation "com.squareup.retrofit2:retrofit:" + rootProject.ext.retroFitVersion
+    implementation "com.squareup.retrofit2:converter-gson:" + rootProject.ext.retroFitVersion
+    //Room
+    implementation "androidx.room:room-runtime:" + rootProject.ext.roomVersion
+    annotationProcessor "androidx.room:room-compiler:" + rootProject.ext.roomVersion
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:" + rootProject.ext.lifecycleVersion
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:" + rootProject.ext.lifecycleVersion
+    implementation "androidx.lifecycle:lifecycle-common-java8:" + rootProject.ext.lifecycleVersion
+    implementation "androidx.lifecycle:lifecycle-extensions:" + rootProject.ext.lifecycleVersion
+
+    def nav_version = "2.2.2"
+
+    // Java language implementation
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    implementation "androidx.navigation:navigation-ui:$nav_version"
 }

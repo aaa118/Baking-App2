@@ -8,12 +8,15 @@ import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 
 import android.view.MenuItem;
+
+import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -27,17 +30,9 @@ public class ItemDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+//        Log.i("AA_", "onCreate: "+getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID));
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -57,9 +52,13 @@ public class ItemDetailActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
+//            Log.i("AA_", "onCreate: "+getIntent().getIntExtra(ARG_ITEM_ID,0));
+
+            getIntent().getParcelableExtra(ARG_ITEM_ID);
+//            Log.i("AA_", "onCreate: "+getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID));
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
+            arguments.putParcelable(ARG_ITEM_ID,
+                    getIntent().getParcelableExtra(ARG_ITEM_ID));
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
