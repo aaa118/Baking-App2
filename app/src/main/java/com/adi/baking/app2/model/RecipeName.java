@@ -3,13 +3,18 @@ package com.adi.baking.app2.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity
 public class RecipeName implements Parcelable {
 
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -18,10 +23,10 @@ public class RecipeName implements Parcelable {
     private String name;
     @SerializedName("ingredients")
     @Expose
-    private List<Ingredient> ingredients = null;
+    private List<Ingredient> ingredients;
     @SerializedName("steps")
     @Expose
-    private List<Step> steps = null;
+    private List<Step> steps;
     @SerializedName("servings")
     @Expose
     private Double servings;
@@ -29,10 +34,6 @@ public class RecipeName implements Parcelable {
     @Expose
     private String image;
     public final static Creator<RecipeName> CREATOR = new Creator<RecipeName>() {
-
-        @SuppressWarnings({
-                "unchecked"
-        })
         public RecipeName createFromParcel(Parcel in) {
             return new RecipeName(in);
         }
@@ -43,6 +44,14 @@ public class RecipeName implements Parcelable {
 
     };
 
+    public RecipeName(Integer id, String name, List<Ingredient> ingredients, List<Step> steps, Double servings) {
+        this.id = id;
+        this.name = name;
+        this.ingredients = ingredients;
+        this.steps = steps;
+        this.servings = servings;
+    }
+
     protected RecipeName(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.name = ((String) in.readValue((String.class.getClassLoader())));
@@ -51,10 +60,6 @@ public class RecipeName implements Parcelable {
         this.servings = ((Double) in.readValue((Double.class.getClassLoader())));
         this.image = ((String) in.readValue((String.class.getClassLoader())));
     }
-
-    public RecipeName() {
-    }
-
     public Integer getId() {
         return id;
     }

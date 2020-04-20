@@ -54,11 +54,11 @@ public class ItemDetailActivity extends AppCompatActivity {
             // using a fragment transaction.
 //            Log.i("AA_", "onCreate: "+getIntent().getIntExtra(ARG_ITEM_ID,0));
 
-            getIntent().getParcelableExtra(ARG_ITEM_ID);
+//            getIntent().getParcelableExtra(ARG_ITEM_ID);
 //            Log.i("AA_", "onCreate: "+getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID));
             Bundle arguments = new Bundle();
-            arguments.putParcelable(ARG_ITEM_ID,
-                    getIntent().getParcelableExtra(ARG_ITEM_ID));
+//            arguments.putParcelable(ARG_ITEM_ID,
+//                    getIntent().getParcelableExtra(ARG_ITEM_ID));
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

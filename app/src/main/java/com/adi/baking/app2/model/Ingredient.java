@@ -3,6 +3,8 @@ package com.adi.baking.app2.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,6 +12,7 @@ public class Ingredient implements Parcelable {
 
     @SerializedName("quantity")
     @Expose
+    @Nullable
     private Double quantity;
     @SerializedName("measure")
     @Expose
@@ -63,12 +66,21 @@ public class Ingredient implements Parcelable {
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(quantity);
-        dest.writeValue(measure);
-        dest.writeValue(ingredient);
+        if (quantity != null) dest.writeValue(quantity); else dest.writeValue(0);
+        if (measure != null) dest.writeValue(measure); else dest.writeValue("");
+        if (ingredient != null) dest.writeValue(ingredient); else dest.writeValue("");
     }
 
     public int describeContents() {
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "quantity=" + quantity +
+                ", measure='" + measure + '\'' +
+                ", ingredient='" + ingredient + '\'' +
+                '}';
     }
 }

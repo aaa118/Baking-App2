@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.adi.baking.app2.adapters.RecipeRecyclerViewAdapter;
 import com.adi.baking.app2.databinding.ActivityItemListBinding;
+import com.adi.baking.app2.db.RecipeDatabase;
 import com.adi.baking.app2.model.RecipeName;
 import com.adi.baking.app2.network.RetroFitInstance;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,6 +49,9 @@ public class ItemListActivity extends AppCompatActivity {
      */
     private boolean mTwoPane;
     private ActivityItemListBinding activityItemListBinding;
+    private static final String TAG = "AA_ItemListActivity";
+    RecipeDatabase recipeDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class ItemListActivity extends AppCompatActivity {
         setContentView(activityItemListBinding.getRoot());
         setSupportActionBar(activityItemListBinding.toolbar);
         activityItemListBinding.toolbar.setTitle(getTitle());
+        recipeDatabase = RecipeDatabase.getInstance(getApplicationContext());
+
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -80,6 +86,21 @@ public class ItemListActivity extends AppCompatActivity {
 
                 View recyclerView = findViewById(R.id.item_list);
                 setupRecyclerView((RecyclerView) recyclerView, response.body());
+
+
+                List<RecipeName> recipesList = response.body();
+                if (recipesList != null) {
+                    for (RecipeName recipe : recipesList) {
+                        RecipeName recipeName = new RecipeName(recipe.getId(), recipe.getName(),
+                                recipe.getIngredients(), recipe.getSteps(), recipe.getServings());
+                        AsyncTask.execute(() -> recipeDatabase.recipesDao().insertRecipes(recipeName));
+                    }
+                }
+
+                Log.i(TAG, "onResponse: " + response.body().get(0).getIngredients());
+                Log.i(TAG, "onResponse: 1" + response.body().get(1).getIngredients());
+                Log.i(TAG, "onResponse: 2" + response.body().get(2).getIngredients());
+                Log.i(TAG, "onResponse: 3" + response.body().get(3).getIngredients());
 //                Log.i(TAG, "onResponse: "+response.body().get(1).getImage());
 //                Log.i(TAG, "onResponse:2 "+response.body().get(2).getImage());
 //                Log.i(TAG, "onResponse:3"+response.body().get(3).getImage());
@@ -98,7 +119,7 @@ public class ItemListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<RecipeName>> call, Throwable t) {
-
+                Log.i("AA_", "onFailure: " + t);
             }
         });
     }
