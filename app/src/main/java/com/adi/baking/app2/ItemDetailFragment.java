@@ -5,17 +5,15 @@ import android.os.Bundle;
 
 import com.adi.baking.app2.adapters.ListRecyclerViewAdapter;
 import com.adi.baking.app2.adapters.StepsViewAdapter;
-import com.adi.baking.app2.model.Ingredient;
 import com.adi.baking.app2.model.RecipeName;
-import com.adi.baking.app2.model.Step;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,12 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-
-import com.adi.baking.app2.dummy.DummyContent;
-
-import java.util.List;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -51,6 +44,9 @@ public class ItemDetailFragment extends Fragment {
     //    private List<RecipeName>mItem;
     RecipeDetailViewModel fragmentListViewModel;
     private static final String TAG = "AA_";
+
+    private SimpleExoPlayer mExoPlayer;
+    private SimpleExoPlayerView mPlayerView;
 
 
     /**
@@ -114,8 +110,9 @@ public class ItemDetailFragment extends Fragment {
             // use a linear layout manager
             layoutManager2 = new LinearLayoutManager(getContext());
             recyclerView2.setLayoutManager(layoutManager2);
-            StepsViewAdapter listAdapter2 = new StepsViewAdapter(recipeName.getSteps());
+            StepsViewAdapter listAdapter2 = new StepsViewAdapter(recipeName.getSteps(), getContext());
             recyclerView2.setAdapter(listAdapter2);
+
 
 
         });
@@ -139,4 +136,25 @@ public class ItemDetailFragment extends Fragment {
 
         return rootView;
     }
+
+//    /**
+//     * Initialize ExoPlayer.
+//     * @param mediaUri The URI of the sample to play.
+//     */
+//    private void initializePlayer(Uri mediaUri) {
+//        if (mExoPlayer == null) {
+//            // Create an instance of the ExoPlayer.
+//            TrackSelector trackSelector = new DefaultTrackSelector();
+//            LoadControl loadControl = new DefaultLoadControl();
+//            mExoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector, loadControl);
+//            mPlayerView.setPlayer(mExoPlayer);
+//            // Prepare the MediaSource.
+//            String userAgent = Util.getUserAgent(this, "ClassicalMusicQuiz");
+//            MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
+//                    getContext(), userAgent), new DefaultExtractorsFactory(), null, null);
+//            mExoPlayer.prepare(mediaSource);
+//            mExoPlayer.setPlayWhenReady(true);
+//        }
+//    }
+
 }

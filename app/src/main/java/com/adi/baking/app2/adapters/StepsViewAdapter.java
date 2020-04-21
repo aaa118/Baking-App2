@@ -1,27 +1,32 @@
 package com.adi.baking.app2.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adi.baking.app2.R;
-import com.adi.baking.app2.model.Ingredient;
 import com.adi.baking.app2.model.Step;
+import com.adi.baking.app2.views.ExoPlayerActivity;
 
 import java.util.List;
+
+import static com.adi.baking.app2.views.ExoPlayerActivity.VIDEO_URL;
 
 public class StepsViewAdapter extends RecyclerView.Adapter<StepsViewAdapter.ViewHolder> {
 
     private List<Step> recipeNameList;
+    private Context context;
 
-    public StepsViewAdapter(List<Step> recipeNameList) {
+    public StepsViewAdapter(List<Step> recipeNameList, Context context) {
         this.recipeNameList = recipeNameList;
+        this.context = context;
     }
 
     @NonNull
@@ -38,8 +43,15 @@ public class StepsViewAdapter extends RecyclerView.Adapter<StepsViewAdapter.View
         Step step = recipeNameList.get(position);
 //        holder.textViewTitle.setText(step.getShortDescription() +": ");
         holder.textViewDescription.setText(step.getDescription());
-        if (step.getVideoURL()!=null && !step.getVideoURL().isEmpty()) {
+        if (step.getVideoURL() != null && !step.getVideoURL().isEmpty()) {
             holder.button.setVisibility(View.VISIBLE);
+
+            holder.button.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ExoPlayerActivity.class);
+                intent.putExtra(VIDEO_URL, step.getVideoURL());
+                context.startActivity(intent);
+            });
+
         }
 //        holder.button.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -55,7 +67,7 @@ public class StepsViewAdapter extends RecyclerView.Adapter<StepsViewAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-//        TextView textViewTitle;
+        //        TextView textViewTitle;
         TextView textViewDescription;
         Button button;
 

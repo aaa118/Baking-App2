@@ -29,6 +29,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.adi.baking.app2.ItemListActivity" />
         </activity>
+        <activity android:name=".views.ExoPlayerActivity"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>
