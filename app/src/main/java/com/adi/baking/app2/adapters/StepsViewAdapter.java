@@ -36,7 +36,7 @@ public class StepsViewAdapter extends RecyclerView.Adapter<StepsViewAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Step step = recipeNameList.get(position);
-        holder.textViewTitle.setText(step.getShortDescription() +": ");
+//        holder.textViewTitle.setText(step.getShortDescription() +": ");
         holder.textViewDescription.setText(step.getDescription());
         if (step.getVideoURL()!=null && !step.getVideoURL().isEmpty()) {
             holder.button.setVisibility(View.VISIBLE);
@@ -55,13 +55,13 @@ public class StepsViewAdapter extends RecyclerView.Adapter<StepsViewAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewTitle;
+//        TextView textViewTitle;
         TextView textViewDescription;
         Button button;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewTitle = itemView.findViewById(R.id.tv_movie_name);
+//            textViewTitle = itemView.findViewById(R.id.tv_movie_name);
             textViewDescription = itemView.findViewById(R.id.tv_description);
             button = itemView.findViewById(R.id.bt_video);
 //            ivPoster = itemView.findViewById(R.id.iv_image);

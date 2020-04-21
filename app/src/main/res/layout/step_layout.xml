@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,25 +16,19 @@
     <!--        android:contentDescription="@string/image_description" />-->
 
 
-    <TextView
-        android:id="@+id/tv_movie_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_description"
-        app:layout_constraintStart_toEndOf="@id/tv_movie_name"
-        />
+<!--    <TextView-->
+<!--        android:id="@+id/tv_movie_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textSize="16sp"-->
+<!--        />-->
 
 
     <TextView
         android:id="@+id/tv_description"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/app_horizontal_margin"
-        app:layout_constraintBottom_toBottomOf="@id/tv_movie_name"
-        app:layout_constraintTop_toBottomOf="@id/tv_movie_name"
-        app:layout_constraintStart_toStartOf="parent"
         android:textSize="16sp" />
 
 
@@ -44,12 +38,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_description"
         android:visibility="gone"
-        android:text="BUtt"
+        android:text="Click For Video"
         android:layout_marginEnd="@dimen/app_horizontal_margin"
-        app:layout_constraintBottom_toBottomOf="@id/tv_description"
-        app:layout_constraintStart_toStartOf="parent"
         android:textSize="16sp" />
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
