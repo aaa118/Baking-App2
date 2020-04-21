@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
             RecipeName recipe = (RecipeName) view.getTag();
             if (mTwoPane) {
                 Bundle arguments = new Bundle();
+                Log.i("AA_", "onClick: "+mTwoPane);
 //                arguments.putString(ItemDetailFragment.ARG_ITEM_ID, String.valueOf(item.getId()));
                 arguments.putParcelable(ItemDetailFragment.ARG_ITEM_ID,  recipe);
                 ItemDetailFragment fragment = new ItemDetailFragment();

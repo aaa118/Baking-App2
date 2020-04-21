@@ -75,6 +75,7 @@ public class ItemListActivity extends AppCompatActivity {
             // If this view is present, then the
             // activity should be in two-pane mode.
             mTwoPane = true;
+            AsyncTask.execute(this::networkRequest);
         }
         AsyncTask.execute(this::networkRequest);
 //        networkRequest();
@@ -102,7 +103,7 @@ public class ItemListActivity extends AppCompatActivity {
 
                         AsyncTask.execute(() -> {
                             recipeDatabase.recipesDao().insertRecipes(recipeName);
-                            Log.i(TAG, "onResponse: "+            recipeDatabase.recipesDao().getAllRecipes().getValue());
+                            Log.i(TAG, "onResponse: "+ recipeDatabase.recipesDao().getAllRecipes().getValue());
 
                         });
                     }

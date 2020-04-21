@@ -72,7 +72,7 @@ public class ItemDetailFragment extends Fragment {
             Activity activity = this.getActivity();
             CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(mItem.getName());
+                appBarLayout.setTitle("TEST");
             }
         }
     }
@@ -112,7 +112,11 @@ public class ItemDetailFragment extends Fragment {
             recyclerView2.setLayoutManager(layoutManager2);
             StepsViewAdapter listAdapter2 = new StepsViewAdapter(recipeName.getSteps(), getContext());
             recyclerView2.setAdapter(listAdapter2);
-
+//
+//            if (mItem != null) {
+////            ((TextView) rootView.findViewById(R.id.item_detail)).setText(fragmentListViewModel.getRecipesListLiveData().getValue().get(mItem.getId()).getName());
+//                ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.getId().toString());
+//            }
 
 
         });
@@ -120,10 +124,10 @@ public class ItemDetailFragment extends Fragment {
 
 
 //        Log.i(TAG, "onCreateView: "+fragmentListViewModel.getRecipesListLiveData().getValue());
-        if (mItem != null) {
-//            ((TextView) rootView.findViewById(R.id.item_detail)).setText(fragmentListViewModel.getRecipesListLiveData().getValue().get(mItem.getId()).getName());
-            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.getName());
-        }
+//        if (mItem != null) {
+////            ((TextView) rootView.findViewById(R.id.item_detail)).setText(fragmentListViewModel.getRecipesListLiveData().getValue().get(mItem.getId()).getName());
+//            ((TextView) rootView.findViewById(R.id.item_detail)).setText(mItem.getId().toString());
+//        }
 
 //        if (mItem != null) {
 //            for (Ingredient ingredient : mItem.getIngredients()) {
