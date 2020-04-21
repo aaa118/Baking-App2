@@ -3,9 +3,12 @@ package com.adi.baking.app2.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity
 public class Step implements Parcelable {
 
     @SerializedName("id")

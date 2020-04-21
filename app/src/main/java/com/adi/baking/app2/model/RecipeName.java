@@ -5,13 +5,15 @@ import android.os.Parcelable;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
 
+import com.adi.baking.app2.db.ListConverter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-@Entity
+@Entity(tableName = "MovieInfo")
 public class RecipeName implements Parcelable {
 
     @PrimaryKey
@@ -55,8 +57,8 @@ public class RecipeName implements Parcelable {
     protected RecipeName(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
         this.name = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.ingredients, (Ingredient.class.getClassLoader()));
-        in.readList(this.steps, (Step.class.getClassLoader()));
+//        in.readList(this.ingredients, (Ingredient.class.getClassLoader()));
+//        in.readList(this.steps, (Step.class.getClassLoader()));
         this.servings = ((Double) in.readValue((Double.class.getClassLoader())));
         this.image = ((String) in.readValue((String.class.getClassLoader())));
     }
@@ -111,8 +113,8 @@ public class RecipeName implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(id);
         dest.writeValue(name);
-        dest.writeList(ingredients);
-        dest.writeList(steps);
+//        dest.writeList(ingredients);
+//        dest.writeList(steps);
         dest.writeValue(servings);
         dest.writeValue(image);
     }

@@ -1,31 +1,24 @@
 package com.adi.baking.app2;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 
 import com.adi.baking.app2.adapters.RecipeRecyclerViewAdapter;
 import com.adi.baking.app2.databinding.ActivityItemListBinding;
 import com.adi.baking.app2.db.RecipeDatabase;
 import com.adi.baking.app2.model.RecipeName;
+import com.adi.baking.app2.model.Step;
 import com.adi.baking.app2.network.RetroFitInstance;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
-import com.adi.baking.app2.dummy.DummyContent;
+import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
+import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
 
 import java.util.List;
 
@@ -51,6 +44,8 @@ public class ItemListActivity extends AppCompatActivity {
     private ActivityItemListBinding activityItemListBinding;
     private static final String TAG = "AA_ItemListActivity";
     RecipeDatabase recipeDatabase;
+    RecipeDetailViewModel fragmentListViewModel;
+
 
 
     @Override
@@ -62,6 +57,17 @@ public class ItemListActivity extends AppCompatActivity {
         activityItemListBinding.toolbar.setTitle(getTitle());
         recipeDatabase = RecipeDatabase.getInstance(getApplicationContext());
 
+
+        RecipeDetailViewModelFactory factory =  RecipeDetailViewModelFactory.getInstance(getApplicationContext(), 0);
+        fragmentListViewModel = ViewModelProviders.of(this, factory).get(RecipeDetailViewModel.class);
+//        fragmentListViewModel.getRecipesListLiveData().observe(this, new Observer<List<RecipeName>>() {
+//            @Override
+//            public void onChanged(List<RecipeName> recipeNames) {
+////                fragmentListViewModel.getRecipesListLiveData().removeObserver(this);
+////                Log.i(TAG, "onChanged: "+recipeNames.size());
+//                Log.i(TAG, "onChanged: ");
+//            }
+//        });
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -93,15 +99,20 @@ public class ItemListActivity extends AppCompatActivity {
                     for (RecipeName recipe : recipesList) {
                         RecipeName recipeName = new RecipeName(recipe.getId(), recipe.getName(),
                                 recipe.getIngredients(), recipe.getSteps(), recipe.getServings());
-                        AsyncTask.execute(() -> recipeDatabase.recipesDao().insertRecipes(recipeName));
+
+                        AsyncTask.execute(() -> {
+                            recipeDatabase.recipesDao().insertRecipes(recipeName);
+                            Log.i(TAG, "onResponse: "+            recipeDatabase.recipesDao().getAllRecipes().getValue());
+
+                        });
                     }
                 }
-
-                Log.i(TAG, "onResponse: " + response.body().get(0).getIngredients());
-                Log.i(TAG, "onResponse: 1" + response.body().get(1).getIngredients());
-                Log.i(TAG, "onResponse: 2" + response.body().get(2).getIngredients());
-                Log.i(TAG, "onResponse: 3" + response.body().get(3).getIngredients());
-//                Log.i(TAG, "onResponse: "+response.body().get(1).getImage());
+//
+//                Log.i(TAG, "onResponse: " + response.body().get(0).getIngredients());
+//                Log.i(TAG, "onResponse: 1" + response.body().get(1).getIngredients());
+//                Log.i(TAG, "onResponse: 2" + response.body().get(2).getIngredients());
+//                Log.i(TAG, "onResponse: 3" + response.body().get(3).getIngredients());
+////                Log.i(TAG, "onResponse: "+response.body().get(1).getImage());
 //                Log.i(TAG, "onResponse:2 "+response.body().get(2).getImage());
 //                Log.i(TAG, "onResponse:3"+response.body().get(3).getImage());
 //

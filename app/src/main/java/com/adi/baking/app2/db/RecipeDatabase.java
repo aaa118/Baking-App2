@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 
 import com.adi.baking.app2.model.RecipeName;
 
-@Database(entities = RecipeName.class, version = 1, exportSchema = false)
+@Database(entities = RecipeName.class, version = 2, exportSchema = false)
 @TypeConverters(ListConverter.class)
 public abstract class RecipeDatabase extends RoomDatabase {
 

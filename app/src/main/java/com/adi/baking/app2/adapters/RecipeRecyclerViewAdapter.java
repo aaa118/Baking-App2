@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adi.baking.app2.ItemDetailActivity;
@@ -17,6 +18,8 @@ import com.adi.baking.app2.ItemListActivity;
 import com.adi.baking.app2.R;
 import com.adi.baking.app2.dummy.DummyContent;
 import com.adi.baking.app2.model.RecipeName;
+import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
+import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +28,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     private final ItemListActivity mParentActivity;
     private final List<RecipeName> recipeNameList;
     private final boolean mTwoPane;
+    private Context context;
     private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
