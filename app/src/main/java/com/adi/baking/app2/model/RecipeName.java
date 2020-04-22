@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -62,6 +63,12 @@ public class RecipeName implements Parcelable {
         this.servings = ((Double) in.readValue((Double.class.getClassLoader())));
         this.image = ((String) in.readValue((String.class.getClassLoader())));
     }
+
+    @Ignore
+    public RecipeName(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

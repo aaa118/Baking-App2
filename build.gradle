@@ -36,4 +36,5 @@ ext {
     roomVersion = "2.2.5"
     lifecycleVersion = "2.2.0"
     retroFitVersion = "2.8.1"
+    rulesVersion = "1.2.0"
 }

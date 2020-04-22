@@ -14,6 +14,7 @@ import com.adi.baking.app2.model.RecipeName;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.adi.baking.app2.IngredientsList.ARG_ITEM_ID_LIST;
 import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
 import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
 
@@ -21,6 +22,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String[] items = {"lorem", "ipsum", "dolor",
             "purus"};
     public static final String RECIPE_NAME = "recipeName";
+    public static final String RECIPE = "recipe";
 
     private Context ctxt;
     private int appWidgetId;
@@ -30,7 +32,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     public ListViewFactory(Context ctxt, Intent intent) {
         this.ctxt = ctxt;
         recipeNameList = intent.getStringArrayListExtra(WIDGET_LIST);
-//        recipeList = intent.getParcelableArrayListExtra(ARG_ITEM_ID);
+        recipeList = intent.getParcelableArrayListExtra(ARG_ITEM_ID_LIST);
 //        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 //                AppWidgetManager.INVALID_APPWIDGET_ID);
     }
@@ -56,7 +58,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
                 R.layout.row);
 
 
-        Log.i("AA_get", "getViewAt: " + recipeNameList);
+        Log.i("AA_get", "getViewAt: " + recipeList);
 
 //        row.setTextViewText(android.R.id.text1, recipeNameList.get(position).getName());
         row.setTextViewText(android.R.id.text1, recipeNameList.get(position));
@@ -65,7 +67,11 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
         Bundle extras = new Bundle();
 
         extras.putString(RECIPE_NAME, recipeNameList.get(position));
+//        extras.putParcelable(RECIPE, recipeList.get(position));
         i.putExtras(extras);
+//        Log.i("AA_get", "getViewAt: " + recipeNameList.get(position));
+//        Log.i("AA_get", "getViewAt: " + recipeList);
+
 //        i.putExtra(ARG_ITEM_ID, recipeList.get(0));
         row.setOnClickFillInIntent(android.R.id.text1, i);
 

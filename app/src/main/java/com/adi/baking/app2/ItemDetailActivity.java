@@ -20,7 +20,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
+import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
 import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
+import static com.adi.baking.app2.ListViewFactory.RECIPE;
+import static com.adi.baking.app2.ListViewFactory.RECIPE_NAME;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -36,8 +41,17 @@ public class ItemDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_detail);
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
-        RecipeName recipeName = getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID);
-        Log.i("AA_", "onCreate: "+getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID));
+
+        //            mItem1 = getArguments().getParcelable(WIDGET_LIST);
+
+        String recipeName = getIntent().getStringExtra(RECIPE_NAME);
+//        if (mItem1.equals("Nutella")) {
+//            mItem1.set
+//        }
+//        ArrayList<RecipeName> recipeName = getIntent().getParcelableExtra(RECIPE);
+        Log.i("AA_", "onCreate: Activity"+recipeName);
+//        RecipeName recipeName = getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID);
+//        Log.i("AA_", "onCreate: "+getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID));
 //        RecipeDetailViewModelFactory factory = null;
 //        if (recipeName != null) {
 //            factory = RecipeDetailViewModelFactory.getInstance(getApplicationContext(), recipeName.getId());
@@ -67,8 +81,8 @@ public class ItemDetailActivity extends AppCompatActivity {
 //            getIntent().getParcelableExtra(ARG_ITEM_ID);
 //            Log.i("AA_", "onCreate: "+getIntent().getParcelableExtra(ItemDetailFragment.ARG_ITEM_ID));
             Bundle arguments = new Bundle();
-            arguments.putParcelable(ARG_ITEM_ID,
-                    getIntent().getParcelableExtra(ARG_ITEM_ID));
+            arguments.putParcelable(ARG_ITEM_ID, getIntent().getParcelableExtra(ARG_ITEM_ID));
+            arguments.putString(RECIPE_NAME, getIntent().getStringExtra(RECIPE_NAME));
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

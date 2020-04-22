@@ -22,7 +22,7 @@ public class IngredientsList extends AppWidgetProvider {
 
     private static final String TAG = "AA_IngredientsList";
     public static final String WIDGET_LIST = "widgetList";
-    private static final String ARG_ITEM_ID_LIST = "recipeList";
+    public static final String ARG_ITEM_ID_LIST = "recipeList";
 //    private static final String RECIPE_LIST = "recipeList";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -46,7 +46,8 @@ public class IngredientsList extends AppWidgetProvider {
 
         Intent clickIntent = new Intent(context, ItemDetailActivity.class);
 //                intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, recipe.getId());
-        clickIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, name);
+//        clickIntent.putParcelableArrayListExtra(ItemDetailFragment.ARG_ITEM_ID, recipeNameArrayList);
+        Log.i(TAG, "updateAppWidget: "+recipeNameArrayList);
 //        context.startActivity(clickIntent);
         PendingIntent clickPI = PendingIntent
                 .getActivity(context, 0,

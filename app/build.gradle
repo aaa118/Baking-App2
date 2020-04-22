@@ -65,4 +65,8 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:2.7.3'
     implementation 'org.jsoup:jsoup:1.10.3'
 
+    // AndroidJUnitRunner and JUnit Rules
+//    androidTestImplementation 'androidx.test:runner:' + rootProject.runnerVersion
+    androidTestImplementation 'androidx.test:rules:' + rootProject.rulesVersion
+
 }
