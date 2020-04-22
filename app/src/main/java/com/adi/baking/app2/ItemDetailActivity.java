@@ -3,17 +3,29 @@ package com.adi.baking.app2;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.adi.baking.app2.model.RecipeName;
+import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
+import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
+
+import java.util.ArrayList;
+
+import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
+import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
+import static com.adi.baking.app2.ListViewFactory.RECIPE;
+import static com.adi.baking.app2.ListViewFactory.RECIPE_NAME;
 
 /**
  * An activity representing a single Item detail screen. This
@@ -27,39 +39,19 @@ public class ItemDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
+
         if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(ItemDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(ItemDetailFragment.ARG_ITEM_ID));
+            arguments.putParcelable(ARG_ITEM_ID, getIntent().getParcelableExtra(ARG_ITEM_ID));
+            arguments.putString(RECIPE_NAME, getIntent().getStringExtra(RECIPE_NAME));
             ItemDetailFragment fragment = new ItemDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -72,12 +64,6 @@ public class ItemDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
             navigateUpTo(new Intent(this, ItemListActivity.class));
             return true;
         }
