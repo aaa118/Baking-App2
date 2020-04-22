@@ -73,7 +73,7 @@ public class WidgetService extends IntentService {
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
             //Now update all widgets
             for (int appWidgetId : appWidgetIds) {
-                IngredientsList.updateAppWidget(this, appWidgetManager, appWidgetId, namesList);
+                IngredientsList.updateAppWidget(this, appWidgetManager, appWidgetId, namesList, recipeNameArrayList);
             }
         }
     }

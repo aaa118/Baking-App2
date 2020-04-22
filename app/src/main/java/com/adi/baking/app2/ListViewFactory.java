@@ -15,18 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
+import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
 
 public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private static final String[] items = {"lorem", "ipsum", "dolor",
             "purus"};
+    public static final String RECIPE_NAME = "recipeName";
 
     private Context ctxt;
     private int appWidgetId;
     private ArrayList<String> recipeNameList;
+    private ArrayList<RecipeName> recipeList;
 
     public ListViewFactory(Context ctxt, Intent intent) {
         this.ctxt = ctxt;
         recipeNameList = intent.getStringArrayListExtra(WIDGET_LIST);
+//        recipeList = intent.getParcelableArrayListExtra(ARG_ITEM_ID);
 //        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 //                AppWidgetManager.INVALID_APPWIDGET_ID);
     }
@@ -52,17 +56,18 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
                 R.layout.row);
 
 
-        Log.i("AA_get", "getViewAt: "+recipeNameList);
+        Log.i("AA_get", "getViewAt: " + recipeNameList);
 
 //        row.setTextViewText(android.R.id.text1, recipeNameList.get(position).getName());
         row.setTextViewText(android.R.id.text1, recipeNameList.get(position));
-//
-//        Intent i=new Intent();
-//        Bundle extras=new Bundle();
-//
-////        extras.putString(WidgetProvider.EXTRA_WORD, items[position]);
-//        i.putExtras(extras);
-//        row.setOnClickFillInIntent(android.R.id.text1, i);
+
+        Intent i = new Intent();
+        Bundle extras = new Bundle();
+
+        extras.putString(RECIPE_NAME, recipeNameList.get(position));
+        i.putExtras(extras);
+//        i.putExtra(ARG_ITEM_ID, recipeList.get(0));
+        row.setOnClickFillInIntent(android.R.id.text1, i);
 
         return (row);
     }

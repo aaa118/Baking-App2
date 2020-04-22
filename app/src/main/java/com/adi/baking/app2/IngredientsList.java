@@ -13,6 +13,8 @@ import com.adi.baking.app2.model.RecipeName;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -20,9 +22,11 @@ public class IngredientsList extends AppWidgetProvider {
 
     private static final String TAG = "AA_IngredientsList";
     public static final String WIDGET_LIST = "widgetList";
+    private static final String ARG_ITEM_ID_LIST = "recipeList";
+//    private static final String RECIPE_LIST = "recipeList";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, ArrayList<String> name) {
+                                int appWidgetId, ArrayList<String> name, ArrayList<RecipeName> recipeNameArrayList) {
 
         CharSequence widgetText = "TEST";
         // Construct the RemoteViews object
@@ -33,8 +37,23 @@ public class IngredientsList extends AppWidgetProvider {
         Intent svcIntent = new Intent(context, ListViewService.class);
         //TODO fix parcelable
         svcIntent.putStringArrayListExtra(WIDGET_LIST, name);
-//        svcIntent.putParcelableArrayListExtra(WIDGET_LIST, name);
+//        svcIntent.putParcelableArrayListExtra(ARG_ITEM_ID_LIST, recipeNameArrayList);
         views.setRemoteAdapter(R.id.list_view, svcIntent);
+
+
+//        Intent clickIntent = new Intent(context, ItemDetailActivity.class);
+
+
+        Intent clickIntent = new Intent(context, ItemDetailActivity.class);
+//                intent.putExtra(ItemDetailFragment.ARG_ITEM_ID, recipe.getId());
+        clickIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, name);
+//        context.startActivity(clickIntent);
+        PendingIntent clickPI = PendingIntent
+                .getActivity(context, 0,
+                        clickIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT);
+
+        views.setPendingIntentTemplate(R.id.list_view, clickPI);
 //        if (name.get(1) !=null) {
 //            views.setTextViewText(R.id.appwidget_text1, name.get(1));
 //        }

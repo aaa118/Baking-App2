@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
+
 /**
  * A fragment representing a single Item detail screen.
  * This fragment is either contained in a {@link ItemListActivity}
@@ -41,6 +43,7 @@ public class ItemDetailFragment extends Fragment {
      */
 //    private DummyContent.DummyItem mItem;
     private RecipeName mItem;
+    private RecipeName mItem1;
     //    private List<RecipeName>mItem;
     RecipeDetailViewModel fragmentListViewModel;
     private static final String TAG = "AA_";
@@ -66,6 +69,8 @@ public class ItemDetailFragment extends Fragment {
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             mItem = getArguments().getParcelable(ARG_ITEM_ID);
+            mItem1 = getArguments().getParcelable(WIDGET_LIST);
+            Log.i(TAG, "onCreate: "+mItem1);
 
 
 
