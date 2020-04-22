@@ -22,16 +22,17 @@ public class IngredientsList extends AppWidgetProvider {
     public static final String WIDGET_LIST = "widgetList";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, ArrayList<RecipeName> name) {
+                                int appWidgetId, ArrayList<String> name) {
 
         CharSequence widgetText = "TEST";
         // Construct the RemoteViews object
-        Log.i(TAG, "updateAppWidget: "+name);
+        Log.i(TAG, "updateAppWidget: " + name);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_list);
 //        views.setTextViewText(R.id.appwidget_text, name.get(0));
 
-        Intent svcIntent=new Intent(context, ListViewService.class);
+        Intent svcIntent = new Intent(context, ListViewService.class);
         //TODO fix parcelable
+        svcIntent.putStringArrayListExtra(WIDGET_LIST, name);
 //        svcIntent.putParcelableArrayListExtra(WIDGET_LIST, name);
         views.setRemoteAdapter(R.id.list_view, svcIntent);
 //        if (name.get(1) !=null) {

@@ -22,11 +22,11 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     private Context ctxt;
     private int appWidgetId;
-    private ArrayList<RecipeName> recipeNameList;
+    private ArrayList<String> recipeNameList;
 
     public ListViewFactory(Context ctxt, Intent intent) {
         this.ctxt = ctxt;
-        recipeNameList = intent.getParcelableArrayListExtra(WIDGET_LIST);
+        recipeNameList = intent.getStringArrayListExtra(WIDGET_LIST);
 //        appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 //                AppWidgetManager.INVALID_APPWIDGET_ID);
     }
@@ -55,7 +55,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
         Log.i("AA_get", "getViewAt: "+recipeNameList);
 
 //        row.setTextViewText(android.R.id.text1, recipeNameList.get(position).getName());
-        row.setTextViewText(android.R.id.text1, items[position]);
+        row.setTextViewText(android.R.id.text1, recipeNameList.get(position));
 //
 //        Intent i=new Intent();
 //        Bundle extras=new Bundle();
