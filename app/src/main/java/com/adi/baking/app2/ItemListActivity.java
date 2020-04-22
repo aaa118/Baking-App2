@@ -1,5 +1,6 @@
 package com.adi.baking.app2;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,6 +58,8 @@ public class ItemListActivity extends AppCompatActivity {
         activityItemListBinding.toolbar.setTitle(getTitle());
         recipeDatabase = RecipeDatabase.getInstance(getApplicationContext());
 
+//        WidgetService.startActionUpdateWidgets(getApplicationContext(), "PASS");
+
 
         RecipeDetailViewModelFactory factory =  RecipeDetailViewModelFactory.getInstance(getApplicationContext(), 0);
         fragmentListViewModel = ViewModelProviders.of(this, factory).get(RecipeDetailViewModel.class);
@@ -96,10 +99,17 @@ public class ItemListActivity extends AppCompatActivity {
 
 
                 List<RecipeName> recipesList = response.body();
+
+//                WidgetService.startActionUpdateWidgets(getApplicationContext(), recipesList.ge);
+
                 if (recipesList != null) {
                     for (RecipeName recipe : recipesList) {
                         RecipeName recipeName = new RecipeName(recipe.getId(), recipe.getName(),
                                 recipe.getIngredients(), recipe.getSteps(), recipe.getServings());
+
+                        WidgetService.startActionUpdateWidgets(getApplicationContext(), recipe.getName(), recipesList);
+
+
 
                         AsyncTask.execute(() -> {
                             recipeDatabase.recipesDao().insertRecipes(recipeName);

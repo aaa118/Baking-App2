@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,7 @@ import com.adi.baking.app2.ItemDetailActivity;
 import com.adi.baking.app2.ItemDetailFragment;
 import com.adi.baking.app2.ItemListActivity;
 import com.adi.baking.app2.R;
+import com.adi.baking.app2.WidgetService;
 import com.adi.baking.app2.dummy.DummyContent;
 import com.adi.baking.app2.model.RecipeName;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
@@ -60,17 +62,21 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         mTwoPane = twoPane;
     }
 
+    @NonNull
     @Override
     public RecipeRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list_content, parent, false);
-        return new RecipeRecyclerViewAdapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final RecipeRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.mIdView.setText(recipeNameList.get(position).getName());
         holder.mContentView.setText(recipeNameList.get(position).getServings().toString());
+
+        WidgetService.startActionUpdateWidgetsWithId(context, position);
+
 
         holder.itemView.setTag(recipeNameList.get(position));
         holder.itemView.setOnClickListener(mOnClickListener);
@@ -81,7 +87,7 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
         return recipeNameList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         final TextView mIdView;
         final TextView mContentView;
 
