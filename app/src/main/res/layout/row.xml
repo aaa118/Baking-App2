@@ -7,5 +7,4 @@
     android:gravity="center_vertical"
     android:textColor="@android:color/white"
     android:paddingLeft="6dip"
-    android:minHeight="?android:attr/listPreferredItemHeight"
     />

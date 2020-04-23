@@ -38,19 +38,8 @@ public class IngredientsList extends AppWidgetProvider {
             ingredientsNamesList.add(ingredient.getIngredient());
         }
         svcIntent.putStringArrayListExtra(WIDGET_LIST, ingredientsNamesList);
-//        ArrayList<Ingredient> intentToPass =  (ArrayList<Ingredient>) recipeNameArrayList;
-//        svcIntent.putParcelableArrayListExtra(WIDGET_LIST, recipeNameArrayList);
         Log.i(TAG, "intentToPass: "+ingredientsNamesList);
         views.setRemoteAdapter(R.id.list_view, svcIntent);
-
-        Intent clickIntent = new Intent(context, ItemDetailActivity.class);
-
-//        PendingIntent clickPI = PendingIntent
-//                .getActivity(context, 0,
-//                        clickIntent,
-//                        PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        views.setPendingIntentTemplate(R.id.list_view, clickPI);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
