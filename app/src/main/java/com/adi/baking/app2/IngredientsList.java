@@ -5,9 +5,11 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.adi.baking.app2.model.Ingredient;
 import com.adi.baking.app2.model.RecipeName;
 
 import java.util.ArrayList;
@@ -25,23 +27,30 @@ public class IngredientsList extends AppWidgetProvider {
     public static final String ARG_ITEM_ID_LIST = "recipeList";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId, ArrayList<String> name, ArrayList<RecipeName> recipeNameArrayList) {
+                                int appWidgetId, ArrayList<Ingredient> recipeNameArrayList) {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ingredients_list);
 
         Intent svcIntent = new Intent(context, ListViewService.class);
-        svcIntent.putStringArrayListExtra(WIDGET_LIST, name);
+        ArrayList<String> ingredientsNamesList = new ArrayList<>();
+        for (Ingredient ingredient : recipeNameArrayList) {
+            ingredientsNamesList.add(ingredient.getIngredient());
+        }
+        svcIntent.putStringArrayListExtra(WIDGET_LIST, ingredientsNamesList);
+//        ArrayList<Ingredient> intentToPass =  (ArrayList<Ingredient>) recipeNameArrayList;
+//        svcIntent.putParcelableArrayListExtra(WIDGET_LIST, recipeNameArrayList);
+        Log.i(TAG, "intentToPass: "+ingredientsNamesList);
         views.setRemoteAdapter(R.id.list_view, svcIntent);
 
         Intent clickIntent = new Intent(context, ItemDetailActivity.class);
 
-        PendingIntent clickPI = PendingIntent
-                .getActivity(context, 0,
-                        clickIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-        views.setPendingIntentTemplate(R.id.list_view, clickPI);
+//        PendingIntent clickPI = PendingIntent
+//                .getActivity(context, 0,
+//                        clickIntent,
+//                        PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        views.setPendingIntentTemplate(R.id.list_view, clickPI);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);

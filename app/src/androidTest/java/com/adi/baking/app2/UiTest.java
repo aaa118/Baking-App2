@@ -35,6 +35,15 @@ public class UiTest {
         onView(withId(R.id.rl_item_detail)).check(matches(isDisplayed()));
     }
 
+    @Test
+    public void testAllRecipesAreDisplayed() {
+        sleep();
+        onView(withText("Brownies")).check(matches(isDisplayed()));
+        onView(withText("Nutella Pie")).check(matches(isDisplayed()));
+        onView(withText("Yellow Cake")).check(matches(isDisplayed()));
+        onView(withText("Cheesecake")).check(matches(isDisplayed()));
+    }
+
     private void sleep() {
         try {
             Thread.sleep(2000);

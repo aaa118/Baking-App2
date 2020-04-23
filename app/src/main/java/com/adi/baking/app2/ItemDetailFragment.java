@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.adi.baking.app2.adapters.ListRecyclerViewAdapter;
 import com.adi.baking.app2.adapters.StepsViewAdapter;
+import com.adi.baking.app2.model.Ingredient;
 import com.adi.baking.app2.model.RecipeName;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
@@ -12,6 +13,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +24,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
 import static com.adi.baking.app2.ListViewFactory.RECIPE_NAME;
@@ -43,6 +48,7 @@ public class ItemDetailFragment extends Fragment {
     private String recipeName;
     RecipeDetailViewModel fragmentListViewModel;
     private static final String TAG = "AA_";
+    ArrayList<Ingredient> ingredientList;
 
 
     @Override
@@ -77,7 +83,8 @@ public class ItemDetailFragment extends Fragment {
 
         fragmentListViewModel.getRecipesListLiveData().observe(getViewLifecycleOwner(), recipeNames -> {
             RecipeName recipeName = recipeNames.get(mItem.getId() - 1);
-
+            ingredientList = (ArrayList<Ingredient>) recipeNames.get(mItem.getId() - 1).getIngredients();
+            WidgetService.startActionUpdateWidgets(getContext(), ingredientList);
             RecyclerView recyclerView;
             RecyclerView.LayoutManager layoutManager;
             recyclerView = rootView.findViewById(R.id.rl_item_detail);
@@ -97,10 +104,15 @@ public class ItemDetailFragment extends Fragment {
             recyclerView2.setLayoutManager(layoutManager2);
             StepsViewAdapter listAdapter2 = new StepsViewAdapter(recipeName.getSteps(), getContext());
             recyclerView2.setAdapter(listAdapter2);
-
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("lastClickedIngredient", ingredientList);
     }
 
     private void setIdFromWidget() {

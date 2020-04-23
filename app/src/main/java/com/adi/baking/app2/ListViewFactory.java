@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.adi.baking.app2.model.Ingredient;
 import com.adi.baking.app2.model.RecipeName;
 
 import java.util.ArrayList;
@@ -23,16 +24,20 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
             "purus"};
     public static final String RECIPE_NAME = "recipeName";
     public static final String RECIPE = "recipe";
+    private static final String TAG = "AA_ListViewFactory";
 
     private Context ctxt;
     private int appWidgetId;
     private ArrayList<String> recipeNameList;
-    private ArrayList<RecipeName> recipeList;
+//    private ArrayList<Ingredient> ingredientsList;
+//    private ArrayList<RecipeName> recipeList;
 
     public ListViewFactory(Context ctxt, Intent intent) {
         this.ctxt = ctxt;
         recipeNameList = intent.getStringArrayListExtra(WIDGET_LIST);
-        recipeList = intent.getParcelableArrayListExtra(ARG_ITEM_ID_LIST);
+//        ingredientsList = intent.getParcelableArrayListExtra(WIDGET_LIST);
+        Log.i(TAG, "ListViewFactory: "+recipeNameList);
+//        recipeList = intent.getParcelableArrayListExtra(ARG_ITEM_ID_LIST);
     }
 
     @Override
@@ -55,6 +60,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
         RemoteViews row = new RemoteViews(ctxt.getPackageName(),
                 R.layout.row);
 
+//        row.setTextViewText(android.R.id.text1, ingredientsList.get(0).getIngredient());
         row.setTextViewText(android.R.id.text1, recipeNameList.get(position));
 
         Intent i = new Intent();
@@ -63,7 +69,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
         extras.putString(RECIPE_NAME, recipeNameList.get(position));
         i.putExtras(extras);
 
-        row.setOnClickFillInIntent(android.R.id.text1, i);
+//        row.setOnClickFillInIntent(android.R.id.text1, i);
 
         return (row);
     }

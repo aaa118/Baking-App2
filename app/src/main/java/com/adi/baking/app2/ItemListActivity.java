@@ -1,6 +1,5 @@
 package com.adi.baking.app2;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,19 +7,19 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adi.baking.app2.adapters.RecipeRecyclerViewAdapter;
 import com.adi.baking.app2.databinding.ActivityItemListBinding;
 import com.adi.baking.app2.db.RecipeDatabase;
+import com.adi.baking.app2.model.Ingredient;
 import com.adi.baking.app2.model.RecipeName;
-import com.adi.baking.app2.model.Step;
 import com.adi.baking.app2.network.RetroFitInstance;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -73,7 +72,7 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List<RecipeName> body) {
-        recyclerView.setAdapter(new RecipeRecyclerViewAdapter(this, body, mTwoPane));
+        recyclerView.setAdapter(new RecipeRecyclerViewAdapter(this, body, mTwoPane, getApplicationContext()));
     }
 
 
@@ -87,13 +86,14 @@ public class ItemListActivity extends AppCompatActivity {
 
 
                 List<RecipeName> recipesList = response.body();
+//                WidgetService.startActionUpdateWidgets(getApplicationContext(), (ArrayList<Ingredient>) recipesList.get(0).getIngredients());
+
 
                 if (recipesList != null) {
                     for (RecipeName recipe : recipesList) {
                         RecipeName recipeName = new RecipeName(recipe.getId(), recipe.getName(),
                                 recipe.getIngredients(), recipe.getSteps(), recipe.getServings());
 
-                        WidgetService.startActionUpdateWidgets(getApplicationContext(), recipe.getName(), recipesList);
 
 
 
