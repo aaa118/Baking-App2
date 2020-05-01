@@ -33,7 +33,6 @@ public class ExoPlayerActivity extends AppCompatActivity {
     long playerPosition;
     boolean playerState;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,24 +47,26 @@ public class ExoPlayerActivity extends AppCompatActivity {
         else {
             playerState = true;
         }
+
+        checkIntentBeforeInit();
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (Util.SDK_INT > 23) {
-            checkIntentBeforeInit();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (Util.SDK_INT <= 23) {
-            checkIntentBeforeInit();
-        }
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (Util.SDK_INT > 23) {
+//            checkIntentBeforeInit();
+//        }
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (Util.SDK_INT <= 23) {
+//            checkIntentBeforeInit();
+//        }
+//    }
 
     private void checkIntentBeforeInit() {
         Intent intent = getIntent();

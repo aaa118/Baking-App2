@@ -1,31 +1,19 @@
-package com.adi.baking.app2;
+package com.adi.baking.app2.views;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.adi.baking.app2.model.RecipeName;
-import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
-import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.adi.baking.app2.R;
 
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
-import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
-import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
-import static com.adi.baking.app2.ListViewFactory.RECIPE;
-import static com.adi.baking.app2.ListViewFactory.RECIPE_NAME;
+import static com.adi.baking.app2.views.ItemDetailFragment.ARG_ITEM_ID;
+import static com.adi.baking.app2.views.widget.ListViewFactory.RECIPE_NAME;
 
 /**
  * An activity representing a single Item detail screen. This

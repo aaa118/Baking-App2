@@ -18,6 +18,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.test.rule.ActivityTestRule;
 
+import com.adi.baking.app2.views.ItemListActivity;
+
 
 @RunWith(AndroidJUnit4.class)
 @MediumTest

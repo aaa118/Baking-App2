@@ -13,11 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.adi.baking.app2.ItemDetailActivity;
-import com.adi.baking.app2.ItemDetailFragment;
-import com.adi.baking.app2.ItemListActivity;
+import com.adi.baking.app2.views.ItemDetailActivity;
+import com.adi.baking.app2.views.ItemDetailFragment;
+import com.adi.baking.app2.views.ItemListActivity;
 import com.adi.baking.app2.R;
-import com.adi.baking.app2.WidgetService;
+import com.adi.baking.app2.views.widget.WidgetService;
 import com.adi.baking.app2.model.RecipeName;
 
 import java.util.List;

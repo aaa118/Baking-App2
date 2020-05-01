@@ -1,16 +1,16 @@
-package com.adi.baking.app2;
+package com.adi.baking.app2.views;
 
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.adi.baking.app2.R;
+import com.adi.baking.app2.views.widget.WidgetService;
 import com.adi.baking.app2.adapters.ListRecyclerViewAdapter;
 import com.adi.baking.app2.adapters.StepsViewAdapter;
 import com.adi.baking.app2.model.Ingredient;
 import com.adi.baking.app2.model.RecipeName;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModel;
 import com.adi.baking.app2.viewmodels.RecipeDetailViewModelFactory;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import androidx.annotation.NonNull;
@@ -23,13 +23,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static com.adi.baking.app2.IngredientsList.WIDGET_LIST;
-import static com.adi.baking.app2.ListViewFactory.RECIPE_NAME;
+import static com.adi.baking.app2.views.widget.ListViewFactory.RECIPE_NAME;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -43,7 +40,6 @@ public class ItemDetailFragment extends Fragment {
      * represents.
      */
     public static final String ARG_ITEM_ID = "item_id";
-
     private RecipeName mItem;
     private String recipeName;
     RecipeDetailViewModel fragmentListViewModel;

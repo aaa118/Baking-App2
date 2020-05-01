@@ -1,21 +1,19 @@
-package com.adi.baking.app2;
+package com.adi.baking.app2.views.widget;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.adi.baking.app2.R;
 import com.adi.baking.app2.model.Ingredient;
-import com.adi.baking.app2.model.RecipeName;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static com.adi.baking.app2.ItemDetailFragment.ARG_ITEM_ID;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Implementation of App Widget functionality.
@@ -25,6 +23,8 @@ public class IngredientsList extends AppWidgetProvider {
     private static final String TAG = "AA_IngredientsList";
     public static final String WIDGET_LIST = "widgetList";
     public static final String ARG_ITEM_ID_LIST = "recipeList";
+    public static final String INGREDIENTS_LIST = "IngredientsList";
+    public static final String INGREDIENTS_LIST_KEY = "ingredientsListKey";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId, ArrayList<Ingredient> recipeNameArrayList) {
@@ -39,6 +39,14 @@ public class IngredientsList extends AppWidgetProvider {
         }
         svcIntent.putStringArrayListExtra(WIDGET_LIST, ingredientsNamesList);
         Log.i(TAG, "intentToPass: "+ingredientsNamesList);
+        Set<String> set = new HashSet<>();
+        for (String setElement : ingredientsNamesList) {
+            set.add(setElement);
+        }
+        SharedPreferences sharedPref = context.getSharedPreferences(INGREDIENTS_LIST, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putStringSet(INGREDIENTS_LIST_KEY, set);
+        editor.apply();
         views.setRemoteAdapter(R.id.list_view, svcIntent);
 
         // Instruct the widget manager to update the widget
