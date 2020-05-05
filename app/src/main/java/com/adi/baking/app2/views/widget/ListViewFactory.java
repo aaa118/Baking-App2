@@ -12,6 +12,7 @@ import android.widget.RemoteViewsService;
 import com.adi.baking.app2.R;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     private ArrayList<String> recipeNameList;
     private Intent intent;
     private SharedPreferences sharedPref;
-
+    ArrayList<String> defaultList = new ArrayList<>();
 
 
     ListViewFactory(Context context, Intent intent) {
@@ -42,15 +43,15 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public void onCreate() {
         recipeNameList = intent.getStringArrayListExtra(WIDGET_LIST);
+        if (recipeNameList == null) {
+            recipeNameList = defaultList;
+        }
+        defaultList.add("Click On a Recipe to display ingredients here");
 
         sharedPref = context.getSharedPreferences(INGREDIENTS_LIST, Context.MODE_PRIVATE);
-        Set<String> recipesSet =  sharedPref.getStringSet(INGREDIENTS_LIST_KEY, null);
-        Log.i(TAG, "onCreate: "+recipesSet);
-
-//        Log.i(TAG, "ListViewFactory: " + recipeNameList);
-        // no-op
+        Set<String> recipesSet = sharedPref.getStringSet(INGREDIENTS_LIST_KEY, null);
+        Log.i(TAG, "onCreate: " + recipesSet);
     }
-
 
 
     @Override
@@ -71,6 +72,7 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
 //        Log.i(TAG, "ListViewFactory: " + recipeNameList);
 
 
+        Log.i(TAG, "getViewAt: "+recipeNameList);
         row.setTextViewText(android.R.id.text1, recipeNameList.get(position));
 
         Intent i = new Intent();
@@ -106,16 +108,13 @@ public class ListViewFactory implements RemoteViewsService.RemoteViewsFactory {
     public void onDataSetChanged() {
         // no-op
         ArrayList<String> list = null;
-        Set<String> recipesSet =  sharedPref.getStringSet(INGREDIENTS_LIST_KEY, null);
-        List<String> aList = recipesSet.stream().collect(Collectors.toList());
-        Log.i(TAG, "onDataSetChanged: Prefs"+recipesSet);
-        Log.i(TAG, "onDataSetChanged: Stream"+aList);
-
+        Set<String> recipesSet = sharedPref.getStringSet(INGREDIENTS_LIST_KEY, null);
         if (recipesSet != null) {
-            list = new ArrayList<>(recipesSet);
+            recipeNameList = new ArrayList<>(recipesSet);
         }
+        Log.i(TAG, "onDataSetChanged: Prefs" + recipesSet);
+
 //        recipeNameList = intent.getStringArrayListExtra(WIDGET_LIST);
-        recipeNameList = list;
         Log.i(TAG, "onDataSetChanged: " + recipeNameList);
 
     }

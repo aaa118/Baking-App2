@@ -48,6 +48,8 @@ public class ItemListActivity extends AppCompatActivity {
     private static final String TAG = "AA_ItemListActivity";
     RecipeDatabase recipeDatabase;
     RecipeDetailViewModel fragmentListViewModel;
+    ArrayList<Ingredient> defaultList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,12 @@ public class ItemListActivity extends AppCompatActivity {
         setSupportActionBar(activityItemListBinding.toolbar);
         activityItemListBinding.toolbar.setTitle(getTitle());
         recipeDatabase = RecipeDatabase.getInstance(getApplicationContext());
+        Ingredient defaultIngredient = new Ingredient();
+        defaultIngredient.setIngredient("Click On a Recipe to display ingredients here");
+        defaultIngredient.setMeasure("0");
+        defaultIngredient.setQuantity(0.0);
+        defaultList.add(defaultIngredient);
+        WidgetService.startActionUpdateWidgets(getApplicationContext(), defaultList);
 
         RecipeDetailViewModelFactory factory =  RecipeDetailViewModelFactory.getInstance(getApplicationContext(), 0);
         fragmentListViewModel = ViewModelProviders.of(this, factory).get(RecipeDetailViewModel.class);
@@ -73,6 +81,8 @@ public class ItemListActivity extends AppCompatActivity {
         }
         if (savedInstanceState == null) {
             AsyncTask.execute(this::networkRequest);
+        } else {
+            AsyncTask.execute(this::networkRequest);
         }
     }
 
@@ -87,7 +97,6 @@ public class ItemListActivity extends AppCompatActivity {
                 View recyclerView = findViewById(R.id.item_list);
                 setupRecyclerView((RecyclerView) recyclerView, response.body());
                 List<RecipeName> recipesList = response.body();
-                WidgetService.startActionUpdateWidgets(getApplicationContext(), (ArrayList<Ingredient>) recipesList.get(0).getIngredients());
                 if (recipesList != null) {
                     for (RecipeName recipe : recipesList) {
                         RecipeName recipeName = new RecipeName(recipe.getId(), recipe.getName(),

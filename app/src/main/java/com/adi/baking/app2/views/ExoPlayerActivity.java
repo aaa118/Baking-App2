@@ -3,6 +3,7 @@ package com.adi.baking.app2.views;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class ExoPlayerActivity extends AppCompatActivity {
     public static final String VIDEO_URL = "videoUrl";
     private static final String PLAYER_POSITION = "playerPosition";
     public static final String STATE = "state";
+    private static final String TAG = "ExoPlayerActivity";
     SimpleExoPlayer player;
     PlayerView videoFullScreenPlayer;
     long playerPosition;
@@ -37,14 +39,14 @@ public class ExoPlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exo_layout);
+        Log.i(TAG, "onCreate: ");
         // Initialize the player view.
         videoFullScreenPlayer = findViewById(R.id.playerView);
 
         if (savedInstanceState != null) {
             playerState = savedInstanceState.getBoolean(STATE);
             playerPosition = savedInstanceState.getLong(PLAYER_POSITION);
-        }
-        else {
+        } else {
             playerState = true;
         }
 
@@ -52,26 +54,27 @@ public class ExoPlayerActivity extends AppCompatActivity {
     }
 
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (Util.SDK_INT > 23) {
-//            checkIntentBeforeInit();
-//        }
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (Util.SDK_INT <= 23) {
-//            checkIntentBeforeInit();
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (Util.SDK_INT > 23) {
+            checkIntentBeforeInit();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Util.SDK_INT <= 23) {
+            checkIntentBeforeInit();
+        }
+    }
 
     private void checkIntentBeforeInit() {
         Intent intent = getIntent();
         if (intent != null) {
             String url = intent.getStringExtra(VIDEO_URL);
+            Log.i(TAG, "checkIntentBeforeInit: " + url);
             // Initialize the player.
             initializePlayer(Uri.parse(url));
         }
@@ -105,15 +108,17 @@ public class ExoPlayerActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        playerPosition = player.getCurrentPosition();
-        outState.putLong(PLAYER_POSITION, playerPosition);
-        playerState = player.getPlayWhenReady();
-        outState.putBoolean(STATE, playerState);
+            outState.putLong(PLAYER_POSITION, playerPosition);
+            outState.putBoolean(STATE, playerState);
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        playerPosition = player.getCurrentPosition();
+        playerState = player.getPlayWhenReady();
+        Log.i(TAG, "onPause: ");
         if (Util.SDK_INT <= 23) {
             releasePlayer();
         }
@@ -122,6 +127,9 @@ public class ExoPlayerActivity extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+        playerPosition = player.getCurrentPosition();
+        playerState = player.getPlayWhenReady();
+        Log.i(TAG, "onStop: ");
         if (Util.SDK_INT > 23) {
             releasePlayer();
         }
